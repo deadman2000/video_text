@@ -1,0 +1,10 @@
+.cache/
+.idea/
+.local/
+download/
+.config/
+.ipynb_checkpoints/
+.ipython/
+.jupyter/
+__pycache__/
+notebook_cookie_secret

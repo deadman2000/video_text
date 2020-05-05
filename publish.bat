@@ -1,0 +1,1 @@
+docker push docker.dev.ask-glonass.ru/video:latest
