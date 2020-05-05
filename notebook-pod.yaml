@@ -1,0 +1,88 @@
+# Volumes
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: translate-notebook-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/user/video_text/work"
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: translate
+  name: translate-notebook-data
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: translate-notebook-volume
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: translate
+  labels:
+    app: notebook
+spec:
+  containers:
+  - name: notebook
+    image: jupyter/datascience-notebook
+    ports:
+    - containerPort: 8888
+    env:
+    - name: MONGO_URL
+      valueFrom:
+        secretKeyRef:
+          name: mongo
+          key: url
+    volumeMounts:
+    - mountPath: /home/jovyan
+      name: work
+  volumes:
+  - name: work
+    persistentVolumeClaim:
+      claimName: translate-notebook-data
+---
+
+# Notebook
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: translate
+  name: notebook-service
+spec:
+  selector:
+    app: notebook
+  ports:
+  - port: 8888
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: translate
+  name: notebook
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`notebooktr.ml.ask-glonass.ru`)
+    kind: Rule
+    services:
+    - name: notebook-service
+      port: 8888
+  tls:
+    certResolver: default
