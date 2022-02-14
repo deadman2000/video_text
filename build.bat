@@ -1,1 +1,0 @@
-docker build -t docker.dev.ask-glonass.ru/video:latest .

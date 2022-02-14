@@ -1,2 +1,1 @@
-rem docker run --rm -e MONGO_URL=mongodb://dead_man:XWyVAg6gvkWhNnxYBFGX@95.216.44.142:27018 docker.dev.ask-glonass.ru/video:latest
-docker run --rm -e MONGO_URL=mongodb://root:example@192.168.99.100 -e ELASTIC_URL=http://192.168.99.100:9200 docker.dev.ask-glonass.ru/video:latest
+jupyter notebook

@@ -1,21 +1,23 @@
 import os
-import pytube
+from yt_dlp import YoutubeDL
 import cv2
 
-video_dir = './download'
+video_dir = 'download'
 
 
 def download_video(video_id):
+    ydl_opts = {
+        'format': 'mp4',
+        'restrictfilenames': True,
+        'outtmpl': '%(id)s.%(ext)s',
+        'paths': {'home': video_dir},
+    }
+    with YoutubeDL(ydl_opts) as ydl:
+        ydl.download('https://www.youtube.com/watch?v=%s' % video_id)
+
     file_name = video_id + '.mp4'
     path = video_dir + '/' + file_name
-    if os.path.isfile(path):
-        return path
-
-    video_url = 'https://www.youtube.com/watch?v=%s' % video_id
-    print('Downloading %s' % video_url)
-    youtube = pytube.YouTube(video_url)
-    video = youtube.streams.first()
-    return video.download(video_dir, video_id)
+    return path
 
 
 def get_frame(video_id, time):
