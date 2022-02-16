@@ -6,6 +6,10 @@ video_dir = 'download'
 
 
 def download_video(video_id):
+    path = video_dir + '/' + video_id + '.mp4'
+    if os.path.isfile(path):
+        return path
+    
     ydl_opts = {
         'format': 'mp4',
         'restrictfilenames': True,
@@ -15,8 +19,6 @@ def download_video(video_id):
     with YoutubeDL(ydl_opts) as ydl:
         ydl.download('https://www.youtube.com/watch?v=%s' % video_id)
 
-    file_name = video_id + '.mp4'
-    path = video_dir + '/' + file_name
     return path
 
 

@@ -3,7 +3,7 @@ import pytesseract
 import numpy as np
 
 
-def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
+def unsharp(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
     """Return a sharpened version of the image, using an unsharp mask."""
     blurred = cv2.GaussianBlur(image, kernel_size, sigma)
     sharpened = float(amount + 1) * image - float(amount) * blurred
@@ -17,7 +17,7 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
 
 
 def preprocess_image(im):
-    im = unsharp_mask(im)
+    im = unsharp(im)
     im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)  # В оттенки серого
     h, w = im.shape
     scale = 1920 // w
@@ -36,13 +36,3 @@ def extract_text(im):
     #     print(v)
 
     return pytesseract.image_to_string(im, config='--psm 4')
-
-
-if __name__ == "__main__":
-    im = cv2.imread('./frames/frame11.png')
-    im = cv2.bitwise_not(im)
-    im = preprocess_image(im)
-    cv2.imwrite('./out.png', im)
-
-    print('Extract text...')
-    print(extract_text(im))
