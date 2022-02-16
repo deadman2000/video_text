@@ -1,7 +1,6 @@
 .cache/
 .idea/
 .local/
-download/
 .config/
 .ipynb_checkpoints/
 .ipython/
