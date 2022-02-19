@@ -1,3 +1,2 @@
-pip install jupyter
-pip install jupyterlab
+pip install jupyter jupyterlab matplotlib
 pip install -r work\requirements.txt

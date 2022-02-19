@@ -31,5 +31,18 @@ def get_frame(video_id, time):
         return None
     return image
 
-if __name__ == '__main__':
-    print(download_video('4edj5UJvfIc'))
+
+def info(video_id):
+    path = download_video(video_id)
+    vidcap = cv2.VideoCapture(path)
+    return (int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT)), vidcap.get(cv2.CAP_PROP_FPS))
+
+
+def get_frame_num(video_id, frame):
+    path = download_video(video_id)
+    vidcap = cv2.VideoCapture(path)
+    vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
+    success, image = vidcap.read()
+    if not success:
+        return None
+    return image

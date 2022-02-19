@@ -1,7 +1,5 @@
-moviepy
+pillow
+image
 pytesseract
-elasticsearch>=7.0.0,<8.0.0
 opencv-python
-pymongo
-matplotlib
 yt-dlp
