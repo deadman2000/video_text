@@ -40,6 +40,7 @@ class VideoProcessor:
                     'frames': frames,
                     'fps': fps
                 })
+                break
             except:
                 time.sleep(10)
 
@@ -66,7 +67,7 @@ class VideoProcessor:
                     'runner': self.runner_id,
                     'texts': texts
                 })
-                break;
+                break
             except:
                 time.sleep(10)
                 
