@@ -3,9 +3,12 @@ import uuid
 import time
 import os, os.path
 from datetime import datetime
+import cv2
 
 from extract import unsharp, thresh, gray, scale, blur, process_text, extract_text
 import download
+
+target_height = 100
 
 class VideoProcessor:
     def __init__(self):
@@ -24,11 +27,15 @@ class VideoProcessor:
                 time.sleep(10)
     
     def process_task(self, task):
-        if task['type'] == 'INFO_REQUEST':
+        ttype = task['type']
+        if ttype == 'INFO_REQUEST':
             self.info_request(task)
-        elif task['type'] == 'GET_TEXT':
+        elif ttype == 'GET_TEXT':
             self.get_text(task)
-        pass
+        elif ttype == 'GET_IMAGE':
+            self.get_image(task)
+        else:
+            print("Unknown task", ttype)
     
     def info_request(self, task):
         frames, fps = download.info(task['videoId'])
@@ -69,6 +76,35 @@ class VideoProcessor:
                 })
                 break
             except:
+                time.sleep(10)
+                
+    def get_image(self, task):
+        frames = task['frames']
+        for f in frames:
+            image = download.get_frame_num(task['videoId'], f)
+            h = image.shape[0]
+            w = image.shape[1]
+            scale = target_height / h
+            im = cv2.resize(image, None, fx=scale, fy=scale)
+            _ , encoded_image = cv2.imencode('.png', im)
+            data = encoded_image.tobytes()
+            
+            while True:
+                try:
+                    print('Send image', task['videoId'], f)
+                    requests.post(self.url+'/api/videotasks/frame/'+task['videoId']+'/'+str(f), data=data)
+                    break
+                except Exception as e:
+                    time.sleep(10)
+        
+        while True:
+            try:
+                requests.post(self.url+'/api/videotasks/images', json={
+                    'taskId': task['id'],
+                    'runner': self.runner_id,
+                })
+                break
+            except Exception as e:
                 time.sleep(10)
                 
     def cleanup(self):
