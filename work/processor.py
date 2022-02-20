@@ -64,7 +64,7 @@ class VideoProcessor:
             if image is None:
                 break
             text = process_text(extract_text(unsharp(scale(6, gray(image)))))
-            if text:
+            if len(text) > 4:
                 texts.append({'frame': i, 'text': text, 't': int(i / fps)})
 
         while True:

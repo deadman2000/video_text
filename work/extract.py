@@ -37,4 +37,4 @@ def process_text(txt):
     lines = txt.split('\n')
     lines = [reg.sub('', l.replace('|', 'I')).strip() for l in lines]
     txt = ' '.join(lines)
-    return txt
+    return txt.strip()
