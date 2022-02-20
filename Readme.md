@@ -1,6 +1,7 @@
 ## Run in docker container
 
 ```
+docker pull deadman2099/video_ocr
 docker run -d --restart always --env SERVER=https://deadman.sknt.ru --env PREFIX=test deadman2099/video_ocr
 ```
 

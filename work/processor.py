@@ -45,7 +45,7 @@ class VideoProcessor:
             print(task['videoId'], i)
             image = download.get_frame_num(task['videoId'], i)
             text = process_text(extract_text(unsharp(scale(6, gray(image)))))
-            if text.strip():
+            if text:
                 texts.append({'frame': i, 'text': text, 't': int(i / fps)})
         while True:
             try:

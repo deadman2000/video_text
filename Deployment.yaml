@@ -19,6 +19,9 @@ spec:
       containers:
       - name: video
         image: "deadman2099/video_ocr:latest"
+        imagePullPolicy: Always
         env:
         - name: SERVER
           value: https://deadman.sknt.ru
+        - name: PREFIX
+          value: kube
