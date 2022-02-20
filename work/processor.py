@@ -2,6 +2,7 @@ import requests
 import uuid
 import time
 import os, os.path
+from datetime import datetime
 
 from extract import unsharp, thresh, gray, scale, blur, process_text, extract_text
 import download
@@ -13,10 +14,14 @@ class VideoProcessor:
         self.url = os.environ.get('SERVER', 'http://localhost:5000')
 
     def get_task(self):
-        r = requests.get(self.url + '/api/videotasks', params={'runner': self.runner_id})
-        if len(r.content) == 0:
-            return None
-        return r.json()
+        while True:
+            try:
+                r = requests.get(self.url + '/api/videotasks', params={'runner': self.runner_id})
+                if len(r.content) == 0:
+                    return None
+                return r.json()
+            except:
+                time.sleep(10)
     
     def process_task(self, task):
         if task['type'] == 'INFO_REQUEST':
@@ -27,12 +32,16 @@ class VideoProcessor:
     
     def info_request(self, task):
         frames, fps = download.info(task['videoId'])
-        requests.post(self.url + '/api/videotasks/info', json={
-            'taskId': task['id'],
-            'runner': self.runner_id,
-            'frames': frames,
-            'fps': fps
-        })
+        while True:
+            try:
+                requests.post(self.url + '/api/videotasks/info', json={
+                    'taskId': task['id'],
+                    'runner': self.runner_id,
+                    'frames': frames,
+                    'fps': fps
+                })
+            except:
+                time.sleep(10)
 
     def get_text(self, task):
         texts = []
@@ -44,9 +53,12 @@ class VideoProcessor:
         for i in range(frame, frame+count*skip, skip):
             print(task['videoId'], i)
             image = download.get_frame_num(task['videoId'], i)
+            if image is None:
+                break
             text = process_text(extract_text(unsharp(scale(6, gray(image)))))
             if text:
                 texts.append({'frame': i, 'text': text, 't': int(i / fps)})
+
         while True:
             try:
                 requests.post(self.url + '/api/videotasks/texts', json={
@@ -61,8 +73,12 @@ class VideoProcessor:
     def cleanup(self):
         for root, dirs, files in os.walk('download'):
             for file in files:
-                os.remove(os.path.join(root, file))
-        pass
+                path = os.path.join(root, file)
+                atime = time.ctime(os.stat(path).st_atime)
+                diff = datetime.now() - datetime.strptime(atime, "%a %b %d %H:%M:%S %Y")
+                days = diff.total_seconds()/60/60/24
+                if days > 2:
+                    os.remove(path)
 
     def run(self):
         while True:
@@ -74,6 +90,7 @@ class VideoProcessor:
                     self.cleanup()
                     time.sleep(10)
             except Exception as e:
+                print(e)
                 time.sleep(10)
 
 
