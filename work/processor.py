@@ -8,7 +8,8 @@ import download
 
 class VideoProcessor:
     def __init__(self):
-        self.runner_id = os.environ.get('RUNNER_ID', str(uuid.uuid1()))
+        prefix = os.environ.get('PREFIX', 'proc')
+        self.runner_id = prefix + '-' + str(uuid.uuid4())[:8]
         self.url = os.environ.get('SERVER', 'http://localhost:5000')
 
     def get_task(self):
@@ -44,7 +45,7 @@ class VideoProcessor:
             print(task['videoId'], i)
             image = download.get_frame_num(task['videoId'], i)
             text = process_text(extract_text(unsharp(scale(6, gray(image)))))
-            if text:
+            if text.strip():
                 texts.append({'frame': i, 'text': text, 't': int(i / fps)})
         while True:
             try:
@@ -58,9 +59,9 @@ class VideoProcessor:
                 time.sleep(10)
                 
     def cleanup(self):
-        #for root, dirs, files in os.walk('download'):
-        #    for file in files:
-        #        os.remove(os.path.join(root, file))
+        for root, dirs, files in os.walk('download'):
+            for file in files:
+                os.remove(os.path.join(root, file))
         pass
 
     def run(self):

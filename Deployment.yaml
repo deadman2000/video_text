@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: video
+  name: video
+  labels:
+    app: video
+spec:
+  replicas: 6
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: video
+  template:
+    metadata:
+      labels:
+        app: video
+    spec:
+      containers:
+      - name: video
+        image: "deadman2099/video_ocr:latest"
+        env:
+        - name: SERVER
+          value: https://deadman.sknt.ru
