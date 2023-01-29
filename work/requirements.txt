@@ -3,3 +3,5 @@ image
 pytesseract
 opencv-python
 yt-dlp
+fuzzywuzzy
+python-Levenshtein

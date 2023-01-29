@@ -1,11 +1,13 @@
 def rec(video_id, frame, text):
     return {'video_id': video_id, 'frame': frame, 'text': text}
 
+
+
 data = [
-    rec('Oevq2aSOs0M', 721, 'I\'m sure he...pardon me, what did you say?'),
-    rec('Oevq2aSOs0M', 727, 'Never mind, I\'m just pulling your leg.  Why don\'t you take this desk right here, and we\'ll get you settled in.'),
-    rec('Oevq2aSOs0M', 7702, 'The bottle says: PROFESSOR ABDUL MAAMOUD\'S GUARANTEED SNAKE OIL.'),
-    rec('Oevq2aSOs0M', 10064, 'It\'s the personal diary of former museum President Sterling Waldorf-Carlton.'),
-    rec('-FV_idCr3jQ', 24, "That accusation is false, Miss Bow. However, the High Priest's identity is a carefully guarded secret, so your failure to identify him is nothing to be ashamed about. He was present at the museum party, but was rarely seen afterwards. One witness said he was spotted briefly in the office of Yvette Delacroix."),
-    rec('55qojo9cBBc', 4551, "By reading a few lines from the book, you gather that the theme of this book is that man pays for his crimes against men by suffering for those crimes. It's amazing how much meaning you can get from a few well-chosen words.")
+    rec('NwaUHJko9Ns', 2774, 'After removing the brittle old Bible from the opening in the floorboards, you carefully open it. Written inside the front cover you see...'),
+    rec('yY0t8Wp28c8', 1569, 'Francois Pierre Crouton Born - 1787 Passed away - 1832\n     Married Claudette Marie Tourte - 1815\nClaudette Marie Crouton Born - 1796 Passed away - 1856\nThomas Simon Crouton Born - 1816\nClaude Francois Crouton Born - 1819\n     Thomas wed Mary Frances O\'Neil - 1848\nMary Frances Crouton Born - 1827\nWilliam Thomas Crouton Born - 1851 Passed away - 1851\nSarah Marie Crouton Born - 1854'),
+    rec('BV6EZyasaVk', 3662, 'Francois Pierre Crouton Born - 1787 Passed away - 1832\n     Married Claudette Marie Tourte - 1815\nClaudette Marie Crouton Born - 1796 Passed away - 1856\nThomas Simon Crouton Born - 1816\nClaude Francois Crouton Born - 1819\n     Thomas wed Mary Frances O\'Neil - 1848\nMary Frances Crouton Born - 1827\nWilliam Thomas Crouton Born - 1851 Passed away - 1851\nSarah Marie Crouton Born - 1854'),
+    rec('NwaUHJko9Ns', 4271, '"My necklace! I wuz wunderin\' where it got to! "Well, Missy Laura, thank you!"'),
+    rec('yY0t8Wp28c8', 3543, '"You ain\'t good enough to kiss the ground she walks on! You\'re nothing but a low-class jerk!"'),
+    rec('BV6EZyasaVk', 1295, '"Oh, mon ami, I find it difficult to refuse you. I am so attracted to you."'),
 ]
