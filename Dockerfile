@@ -1,5 +1,8 @@
 FROM ubuntu
 
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ UTC
+
 RUN apt update && \
 	apt-get install software-properties-common -y && \
 	add-apt-repository ppa:alex-p/tesseract-ocr5 && \
