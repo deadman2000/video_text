@@ -9,6 +9,7 @@ from extract import unsharp, thresh, gray, scale, blur, process_text, extract_te
 import download
 
 target_height = 100
+FILTERS = 'h_600:thresh:unsharp:'
 
 class VideoProcessor:
     def __init__(self):
@@ -50,6 +51,28 @@ class VideoProcessor:
                 break
             except:
                 time.sleep(10)
+                
+    def estimate(self, im, ps):
+        for p in ps.split(':'):
+            if len(p) == 0: continue
+            if p.startswith('h_'):
+                target_height = int(p[2:])
+                h = im.shape[0]
+                w = im.shape[1]
+                scale = target_height / h
+                im = cv2.resize(im, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+            elif p.startswith('*'):
+                scale = int(p[1:])
+                im = cv2.resize(im, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+            elif p == 'gray':
+                im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+            elif p == 'unsharp':
+                im = unsharp(im)
+            elif p == 'thresh':
+                im = cv2.threshold(im, 150, 255, cv2.THRESH_BINARY)[1]
+            elif p == 'blur':
+                im = cv2.medianBlur(im, 3)
+        return process_text(extract_text(im))
 
     def get_text(self, task):
         texts = []
@@ -63,7 +86,8 @@ class VideoProcessor:
             image = download.get_frame_num(task['videoId'], i)
             if image is None:
                 break
-            text = process_text(extract_text(unsharp(scale(6, gray(image)))))
+            #text = process_text(extract_text(unsharp(scale(6, gray(image)))))
+            text = self.estimate(image, FILTERS)
             if len(text) > 4:
                 texts.append({'frame': i, 'text': text, 't': int(i / fps)})
 
