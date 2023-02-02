@@ -3,6 +3,9 @@
 ```
 docker pull deadman2099/video_ocr
 docker run -d --restart always --env SERVER=https://deadman.sknt.ru --env PREFIX=test deadman2099/video_ocr
+
+# With volume
+docker run -d --restart always --env SERVER=https://deadman.sknt.ru --env PREFIX=test -v $(pwd)/download:/usr/src/app/download deadman2099/video_ocr
 ```
 
 

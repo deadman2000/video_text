@@ -38,3 +38,28 @@ def process_text(txt):
     lines = [reg.sub('', l.replace('|', 'I')).strip() for l in lines]
     txt = ' '.join(lines)
     return txt.strip()
+
+def image_filter(im, ps):
+    for p in ps.split(':'):
+        if len(p) == 0: continue
+        if p.startswith('h_'):
+            target_height = int(p[2:])
+            h = im.shape[0]
+            w = im.shape[1]
+            scale = target_height / h
+            im = cv2.resize(im, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+        elif p.startswith('*'):
+            scale = int(p[1:])
+            im = cv2.resize(im, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+        elif p == 'gray':
+            im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+        elif p == 'unsharp':
+            im = unsharp(im)
+        elif p == 'thresh':
+            im = cv2.threshold(im, 150, 255, cv2.THRESH_BINARY)[1]
+        elif p == 'blur':
+            im = cv2.medianBlur(im, 3)
+    return im
+
+def estimate(im, ps):
+    return process_text(extract_text(image_filter(im, ps)))
