@@ -9,7 +9,6 @@ from extract import estimate
 import download
 
 target_height = 100
-FILTERS = 'h_600:thresh:unsharp:'
 
 class VideoProcessor:
     def __init__(self):
@@ -60,11 +59,11 @@ class VideoProcessor:
         skip = task['frameSkip']
         
         for i in range(frame, frame+count*skip, skip):
-            print(task['videoId'], i)
+            print(task['videoId'], i, task['filters'])
             image = download.get_frame_num(task['videoId'], i)
             if image is None:
                 break
-            text = estimate(image, FILTERS)
+            text = estimate(image, task['filters'])
             if len(text) > 4:
                 texts.append({'frame': i, 'text': text, 't': int(i / fps)})
 
