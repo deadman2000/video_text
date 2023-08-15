@@ -16,10 +16,13 @@ def download_video(video_id):
         'outtmpl': '%(id)s.%(ext)s',
         'paths': {'home': video_dir},
     }
-    with YoutubeDL(ydl_opts) as ydl:
-        ydl.download('https://www.youtube.com/watch?v=%s' % video_id)
-
-    return path
+    while True:
+        try:
+            with YoutubeDL(ydl_opts) as ydl:
+                ydl.download('https://www.youtube.com/watch?v=%s' % video_id)
+            return path
+        except:
+            pass
 
 
 def get_frame(video_id, time):

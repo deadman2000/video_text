@@ -1,13 +1,11 @@
 def rec(video_id, frame, text):
     return {'video_id': video_id, 'frame': frame, 'text': text}
 
-
-
 data = [
-    rec('NwaUHJko9Ns', 2774, 'After removing the brittle old Bible from the opening in the floorboards, you carefully open it. Written inside the front cover you see...'),
-    rec('yY0t8Wp28c8', 1569, 'Francois Pierre Crouton Born - 1787 Passed away - 1832\n     Married Claudette Marie Tourte - 1815\nClaudette Marie Crouton Born - 1796 Passed away - 1856\nThomas Simon Crouton Born - 1816\nClaude Francois Crouton Born - 1819\n     Thomas wed Mary Frances O\'Neil - 1848\nMary Frances Crouton Born - 1827\nWilliam Thomas Crouton Born - 1851 Passed away - 1851\nSarah Marie Crouton Born - 1854'),
-    rec('BV6EZyasaVk', 3662, 'Francois Pierre Crouton Born - 1787 Passed away - 1832\n     Married Claudette Marie Tourte - 1815\nClaudette Marie Crouton Born - 1796 Passed away - 1856\nThomas Simon Crouton Born - 1816\nClaude Francois Crouton Born - 1819\n     Thomas wed Mary Frances O\'Neil - 1848\nMary Frances Crouton Born - 1827\nWilliam Thomas Crouton Born - 1851 Passed away - 1851\nSarah Marie Crouton Born - 1854'),
-    rec('NwaUHJko9Ns', 4271, '"My necklace! I wuz wunderin\' where it got to! "Well, Missy Laura, thank you!"'),
-    rec('yY0t8Wp28c8', 3543, '"You ain\'t good enough to kiss the ground she walks on! You\'re nothing but a low-class jerk!"'),
-    rec('BV6EZyasaVk', 1295, '"Oh, mon ami, I find it difficult to refuse you. I am so attracted to you."'),
+    rec('XMPUmo6Bl1U', 136, 'Say, Ignatius, why are you working in my park now?'),
+    rec('DpVOjGTT7QE', 1182, 'Quite freaky, first thing in the morning.'),
+    rec('Ep74spxrKNw', 2852, 'Okay, I\'m looking for straw strands, to draw lots.'),
+    rec('6PyWjgBpSq4', 421, 'Look, I even have sprouts growing all over me!'),
+    rec('6PyWjgBpSq4', 689, 'Thank you Asgard! High five!'),
+    rec('oKXl7jWlCwY', 869, 'I have a little gift for you, my friend.'),
 ]
