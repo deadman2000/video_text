@@ -7,7 +7,7 @@ services:
     ports:
      - 8888:8888
     volumes:
-     - ./work:/home/jovyan/work
+     - ../work:/home/jovyan/work
     environment:
       LC_CTYPE: en_US.UTF8
       JUPYTER_ALLOW_INSECURE_WRITES: 1

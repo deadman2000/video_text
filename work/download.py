@@ -7,9 +7,12 @@ video_dir = 'download'
 
 
 def download_video(video_id):
+    path = video_dir + '/' + video_id + '.mp4'
+    if os.path.isfile(path):
+        return path
+    
     lock = FileLock(video_dir + '/' + video_id + ".lock")
     with lock:
-        path = video_dir + '/' + video_id + '.mp4'
         if os.path.isfile(path):
             return path
         

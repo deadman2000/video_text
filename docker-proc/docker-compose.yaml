@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  proc:
+    image: deadman2099/video_ocr
+    restart: always
+    volumes:
+     - ./download:/usr/src/app/download
+    environment:
+      SERVER: http://192.168.1.17
+      PREFIX: home
