@@ -31,7 +31,7 @@ def blur(image):
 def extract_text(image):
     return pytesseract.image_to_string(image)
 
-reg = re.compile('[^A-Za-z0-9!?\.\-,'' ]+')
+reg = re.compile('[^A-Za-z0-9!?\\.\\-,'' ]+')
 
 def process_text(txt):
     lines = txt.split('\n')

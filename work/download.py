@@ -1,28 +1,31 @@
 import os
 from yt_dlp import YoutubeDL
 import cv2
+from filelock import Timeout, FileLock
 
 video_dir = 'download'
 
 
 def download_video(video_id):
-    path = video_dir + '/' + video_id + '.mp4'
-    if os.path.isfile(path):
-        return path
-    
-    ydl_opts = {
-        'format': 'mp4',
-        'restrictfilenames': True,
-        'outtmpl': '%(id)s.%(ext)s',
-        'paths': {'home': video_dir},
-    }
-    while True:
-        try:
-            with YoutubeDL(ydl_opts) as ydl:
-                ydl.download('https://www.youtube.com/watch?v=%s' % video_id)
+    lock = FileLock(video_dir + '/' + video_id + ".lock")
+    with lock:
+        path = video_dir + '/' + video_id + '.mp4'
+        if os.path.isfile(path):
             return path
-        except:
-            pass
+        
+        ydl_opts = {
+            'format': 'mp4',
+            'restrictfilenames': True,
+            'outtmpl': '%(id)s.%(ext)s',
+            'paths': {'home': video_dir},
+        }
+        while True:
+            try:
+                with YoutubeDL(ydl_opts) as ydl:
+                    ydl.download('https://www.youtube.com/watch?v=%s' % video_id)
+                return path
+            except:
+                pass
 
 
 def get_frame(video_id, time):

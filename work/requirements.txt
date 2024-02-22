@@ -6,3 +6,4 @@ yt-dlp
 fuzzywuzzy
 python-Levenshtein
 requests
+filelock
