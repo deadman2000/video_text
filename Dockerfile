@@ -16,4 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY work/*.py ./
 
-CMD [ "python3", "./processor.py" ]
+COPY entrypoint.sh ./
+ENTRYPOINT ./entrypoint.sh

@@ -5,7 +5,6 @@ services:
     image: deadman2099/video_ocr
     restart: always
     volumes:
-     - ./download:/usr/src/app/download
-    environment:
-      SERVER: http://192.168.1.17
-      PREFIX: home
+     - ../work/download:/usr/src/app/download
+    env_file:
+     - .env
