@@ -21,6 +21,7 @@ def download_video(video_id):
             'restrictfilenames': True,
             'outtmpl': '%(id)s.%(ext)s',
             'paths': {'home': video_dir},
+            'proxy': os.environ.get('PROXY', '')
         }
         while True:
             try:

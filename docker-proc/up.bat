@@ -1,2 +1,2 @@
-docker compose pull
+rem docker compose pull
 docker compose up -d --scale proc=16

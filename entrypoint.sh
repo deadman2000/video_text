@@ -1,5 +1,9 @@
 #!/bin/bash
 
-#pip install -U -r requirements.txt
+export PATH="/opt/venv/bin:$PATH"
 
-python3 ./processor.py
+#pip install -U -r requirements.txt
+pip install -U yt-dlp
+
+echo "Run processor"
+python3 -u ./processor.py
